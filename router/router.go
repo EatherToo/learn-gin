@@ -1,6 +1,7 @@
 package router
 
 import (
+	"learn-gin/handler"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -38,7 +39,13 @@ func SetupRouter() *gin.Engine {
 	router.OPTIONS("/", func(context *gin.Context) {
 		context.String(http.StatusOK, "hello gin options method")
 	})
-	// 省略其他代码
+
+	userRouter := router.Group("/user")
+	{
+
+		userRouter.GET("/:name", handler.UserSave)
+		userRouter.POST("/register", handler.UserRegister)
+	}
 
 	return router
 }
